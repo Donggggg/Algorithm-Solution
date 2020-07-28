@@ -1,47 +1,37 @@
 #include <iostream>
 #include <algorithm>
-#include <string>
 
 using namespace std;
 
 int main()
 {
-	int start = 0, count = 0, sum = 0, tmp;
-	int list[50];
-	string str;
+	int n, cnt =0 ;
+	int time = 0, early, next, last=0;
+	int meeting[100000][2];
 
-	cin >> str;
+	cin >> n;
 
-	for (int i = 0; i <= str.length(); i++) {
-		if (str[i] == '+' || str[i] == '-' || str[i] == '\0') {
-			list[count] = stoi(str.substr(start, i - start));
-			start = i + 1;
-			count++;
-			list[count] = str[i] - '-' - 1;
-			count++;
-		}
+	for (int i = 0; i < n; i++) {
+		cin >> meeting[i][0] >> meeting[i][1];
+		last = max(last, meeting[i][1]);
 	}
-	count--;
 
-	for (int i = 0; i < count; i++) {
-		printf("%d\n", list[i]);
-		if (list[i] == -3) // '+'인 경우
-			continue;
-		else if (list[i] == -1) { // '-'인 경우
-			tmp = 0;
-			i++;
-			while (list[i] != -1 && i < count) {
-				if (list[i] == -3)
-					i++;
-				else 
-					tmp += list[i++];									
+	while (time <= last) {
+		next = last;
+		for (int i = 0; i < n; i++) {	
+			if (time <= meeting[i][0]) {
+				if (next != min(next, meeting[i][1]))
+					early = meeting[i][0];
+				next = min(next, meeting[i][1]);
 			}
-			i--;
-			sum -= tmp;
 		}
-		else // 숫자인 경우
-			sum += list[i];
-	}	
 
-	printf("%d\n", sum);
+		
+			
+		time = next;
+
+		cnt++;
+	}
+
+	printf("%d\n", cnt);
 }
