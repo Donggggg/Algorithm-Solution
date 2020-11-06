@@ -1,37 +1,31 @@
+#include <stdio.h>
 #include <iostream>
+#include <vector>
 #include <algorithm>
+#include <math.h>
 
 using namespace std;
 
-int main()
+int main() 
 {
-	int n, cnt =0 ;
-	int time = 0, early, next, last=0;
-	int meeting[100000][2];
+	int N, * arr, dp[1010] = { 0, }, ans = 0;
+	int now;
 
-	cin >> n;
+	scanf("%d", &N);
+	arr = new int[N];
+	for (int i = 0; i < N; i++)
+		scanf("%d", &arr[i]);
 
-	for (int i = 0; i < n; i++) {
-		cin >> meeting[i][0] >> meeting[i][1];
-		last = max(last, meeting[i][1]);
-	}
-
-	while (time <= last) {
-		next = last;
-		for (int i = 0; i < n; i++) {	
-			if (time <= meeting[i][0]) {
-				if (next != min(next, meeting[i][1]))
-					early = meeting[i][0];
-				next = min(next, meeting[i][1]);
+	for (int i = 0; i < N; i++) {
+		now = 0;
+		for (int j = 0; j < i + 1; j++) {
+			if (arr[j] > now && arr[i] > arr[j]) {
+				dp[i]++;
+				ans = max(ans, dp[i]);
+				now = arr[j];
 			}
 		}
-
-		
-			
-		time = next;
-
-		cnt++;
 	}
 
-	printf("%d\n", cnt);
+	printf("%d\n", ans);
 }
