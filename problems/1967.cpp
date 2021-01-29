@@ -11,7 +11,7 @@ vector<vector<pair<int,int>>> arr;
 vector<pair<int,int>> temp;
 int visit[10001] = {0, }, weight[10001] = {0, }, mx = 0;
 
-void findMaximumNode()1
+void findMaximumNode()
 {
     while(!q.empty()) {
         parentNode = q.front(); q.pop(); 
