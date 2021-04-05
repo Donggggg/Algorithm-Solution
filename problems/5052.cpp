@@ -3,7 +3,7 @@
 using namespace std;
 
 typedef struct _node {
-    string data;
+  //  string data;
     _node* child[10];
     bool isPhone;
 } Node;
@@ -23,7 +23,7 @@ void freeNode(Node* cur)
 Node* initNode() 
 {
     Node* node = (Node*)malloc(sizeof(Node));
-    node->data.clear();
+   // node->data.clear();
     node->isPhone = false;
     for(int i = 0; i < 10; i++)
         node->child[i] = NULL;
@@ -39,7 +39,7 @@ bool pushString(string str)
     {
         if (cur->child[str[pos] - '0'] == NULL) { // 자식노드가 없는 경우 노드 생성
             tmp = initNode();
-            tmp->data = str.substr(0, pos+1);
+         //   tmp->data = str.substr(0, pos+1);
             cur->child[str[pos] - '0'] = tmp;
         }
 

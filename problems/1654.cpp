@@ -20,6 +20,7 @@ int main()
     {
         num = 0;
         mid = (Left + Right) / 2;
+        
         for(int i = 0; i < K; i++) 
             num += list[i] / mid;
 
