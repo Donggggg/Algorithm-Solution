@@ -52,7 +52,7 @@ int eatFish()
     for(int i = 0; i < N; i++) {
         for(int j = 0; j < N; j++) {
             // 빈 자리이거나 더 무거운 물고기면 안 먹음
-            if(dis[i][j] == 0 || map[i][j] >= sharkWeight)
+            if(map[i][j] == 0 || map[i][j] >= sharkWeight)
                 continue;
 
             // 현재 최소거리보다 작고 물고기가 있으면 먹음
@@ -108,15 +108,7 @@ int main()
         if(eatFish() < 0) 
             break;
     }
-    
-    // for(int i = 0; i < N; i++) {
-    //     for(int j = 0; j < N; j++) {
-    //         printf("%d ", dis[i][j]);
-    //     }
-    //     printf("\n");
-    // }
 
-// printf("%d\n", cnt);
     cout << ans << '\n';
 
     return 0;
