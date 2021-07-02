@@ -10,6 +10,7 @@ int main()
     string name;
     set<string> unknown, invisible, dbj;
     cin >> N >> M;
+
     for(int i = 0; i < N; i++) {
         cin >> name;
         unknown.insert(name);
@@ -23,7 +24,7 @@ int main()
         string cur = *it;
 
         if(invisible.find(cur) != invisible.end()) 
-            dbj.insert(cur);        
+            dbj.insert(cur);       
     }
 
     cout << dbj.size() << '\n';
