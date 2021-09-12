@@ -36,3 +36,5 @@
 .vs
 .vscode
 .DS_STORE
+
+*[0-9]
