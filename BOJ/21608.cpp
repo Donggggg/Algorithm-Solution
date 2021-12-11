@@ -121,14 +121,9 @@ void setStudent (int number)
         c = 1;
         if(seat.size() > 1) {
             seat = findAnySeat(seat);
-                    // printf("여기%d\n", seat.size());
             c = 2;
         }
     }
-    // if(c == 0 ) printf("first");
-    // else if(c==1)printf("second");
-    // else printf("third");
-    // printf("%d %d\n", seat[0].first,seat[0].second);
     map[seat[0].first][seat[0].second] = number;
 }
 
@@ -150,7 +145,6 @@ int main()
     }
 
     for(int i = 0; i < orders.size(); i++) {
-        // printf("%d차례\n", orders[i]);
         setStudent(orders[i]);
     }
 
@@ -168,15 +162,6 @@ int main()
             }
             score += pow(10, cnt - 1);
         }
-
-        // for(int i = 0; i < N; i++){ 
-        // for(int j = 0; j < N; j++)
-        // {
-        //     printf("%d ", map[i][j]);
-        // }
-        // printf("\n");
-        // }
-
     cout << score << '\n';
 
     return 0;
