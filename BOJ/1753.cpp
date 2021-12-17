@@ -1,51 +1,76 @@
 #include <iostream>
 #include <vector>
 #include <queue>
-#include <algorithm>
-#define MAX_NODE 20000
-#define INF 3000000
+#include <string>
+#include <set>
+#define P pair<int,int>
+#define MAX 20001
+#define INF 2000001
 using namespace std;
 
-int V, E, K;
-vector<pair<int,int>> graph[MAX_NODE+1];
-int d[MAX_NODE+1];
 
-void dijkstra(int K)
-{
-    queue<int> q;
-    q.push(K);
+int V, E, T;
+vector<set<P>> graph;
 
-    while(!q.empty())
-    {
-        printf("hello");
-        int cur = q.front(); q.pop();
+struct cmp {
+    bool operator()(P &p1, P &p2) {
+        return p1.second > p2.second;
+    }
+};
+
+vector<int> dijsktra(int sVertex) {
+    set<P>::iterator iter;
+    priority_queue<P, vector<P>, cmp> pq;
+    vector<int> dist(V+1, INF);
+    vector<bool> visits(V+1, false);
+
+    dist[sVertex] = 0;
+    pq.push(make_pair(sVertex, 0));
+
+    while(!pq.empty()) {
+        int v = pq.top().first;
+        int w = pq.top().second;
+        pq.pop();
+
+        if(visits[v]) continue;
+        visits[v] = true;
+
         
-        for(int i = 0; i < graph[cur].size(); i++) {
-            int dest = graph[cur][i].first;
-            int w = graph[cur][i].second;
-            if(d[dest] < d[cur] + w) continue;
-            d[dest] = d[cur] + w;
-            q.push(dest);
+        for(iter = graph[v].begin(); iter != graph[v].end(); iter++) {
+            int nv = (*iter).first;
+            int nw = (*iter).second;
+
+            if(dist[nv] > dist[v] + nw) {
+                dist[nv] = dist[v] + nw;
+                pq.push(make_pair(nv, dist[nv]));
+            }
         }
     }
+
+    return dist;
 }
 
-int main()
-{
-    cin.tie(NULL); ios_base::sync_with_stdio(false);
-    int u, v, w;
-    cin >> V >> E;
-    cin >> K;
-    for(int i = 0; i < E; i++) {
-        cin >> u >> v >> w;
-        graph[u].push_back(make_pair(v,w));
-    }
-    fill(d, d+V+1, INF);
-    d[K] = 0;
-    dijkstra(K);
+int main() {
+    int x, y, w;
+    vector<int> answer;
 
-    for(int i = 1; i <= V; i++) 
-        d[i] == INF ? cout << "INF" << '\n' : cout << d[i] << '\n';
-    
+    cin >> V >> E;
+    cin >> T;
+
+    for(int i = 0; i <= V; i++)
+        graph.push_back(set<P>());
+
+    for(int i = 0; i < E; i++) {
+        cin >> x >> y >> w;
+        graph[x].insert(make_pair(y, w));
+    }
+
+    answer = dijsktra(T);
+
+    for(int i = 1; i <= V; i++) {
+        if(answer[i] == INF) cout << "INF" << '\n';
+        else cout << answer[i] << '\n';
+    }
+
     return 0;
 }
