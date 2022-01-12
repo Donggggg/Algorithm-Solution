@@ -43,11 +43,9 @@ void getMaximumWeight(int start, int end) {
    while(left <= right) {
        mid = (left + right) / 2;
 
-       bool isValid = checkPath(mid, start, end);
-
-       if(isValid) {
+       if(checkPath(mid, start, end)) {
            left = mid + 1;
-           if(result < mid) result = mid; 
+           result = mid; 
        } else {
            right = mid - 1;
        }

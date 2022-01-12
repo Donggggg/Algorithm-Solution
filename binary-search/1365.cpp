@@ -8,7 +8,7 @@ int N;
 vector<int> lines, arr;
 
 int main() {
-    int x, mlen = 0;
+    int x;
 
     cin >> N;
 
