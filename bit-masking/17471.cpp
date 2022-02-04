@@ -2,6 +2,7 @@
 #include <math.h>
 #include <vector>
 #include <queue>
+#include <algorithm>
 #define MAX 10
 #define OVER 1000
 #define BIN_MAX 1024
@@ -12,7 +13,8 @@ bool visits[BIN_MAX];
 vector<vector<int>> graph;
 
 int getDiff(int bin) {
-    int i = 0, cnt = 0, sum[2];
+    int tb = bin;
+    int i = 1, cnt = 1, sum[2], lidx;
     vector<int> list[2];
     queue<int> q;
 
@@ -21,13 +23,20 @@ int getDiff(int bin) {
         bin >>= 1;
     }
 
+    lidx = list[0].size() + list[1].size() + 1;
+
+    if(lidx <= N) {
+        for(i = lidx; i <= N; i++)
+            list[0].push_back(i);
+    }
+
     if(list[0].size() == 0 || list[1].size() == 0)
         return OVER;
 
     bool v[MAX + 1] = {false, };
-    v[list[0][0] + 1] = true;
-    q.push(list[0][0] + 1);
-    sum[0] = w[list[0][0] + 1];
+    v[list[0][0]] = true;
+    q.push(list[0][0]);
+    sum[0] = w[list[0][0]];
 
     while(!q.empty()) {
         int cur = q.front(); q.pop();
@@ -47,11 +56,11 @@ int getDiff(int bin) {
 
     if(cnt != list[0].size())
         return OVER;
-
-    cnt = 0;
-    v[list[1][0]+1] = true;
-    q.push(list[1][0]+1);
-    sum[1] = w[list[1][0] + 1];
+    
+    cnt = 1;
+    v[list[1][0]] = true;
+    q.push(list[1][0]);
+    sum[1] = w[list[1][0]];
 
     while(!q.empty()) {
         int cur = q.front(); q.pop();
@@ -77,7 +86,6 @@ int getDiff(int bin) {
 
 void getMinAns(int idx, int bin) {
     if(!visits[bin]) {
-        printf("%d\n", bin);
         visits[bin] = true;
         int diff = getDiff(bin);
         if(diff < ans) ans = diff;
@@ -91,11 +99,11 @@ void getMinAns(int idx, int bin) {
 }
 
 void solve() {
-    for(int i = 0; i < N; i++) {
+    for(int i = 0; i < N; i++) 
         getMinAns(i, pow(2, i));
-    }
 
-    cout << ans << '\n';
+    if(ans != OVER) cout << ans << '\n';
+    else cout << -1 << '\n';
 }
 
 int main() {
