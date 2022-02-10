@@ -43,7 +43,7 @@ int main() {
     cin >> N;
 
     confusedPassword = getConfusedPassword(password);
-    if(N < 1 || (long long)pow(2, wrongIndexes.size()) <= N - 1) cout << -1 << '\n';
+    if(N < 1 || (long long)pow(2, wrongIndexes.size()) < N) cout << -1 << '\n';
     else cout << getValidatePassword(confusedPassword, N - 1) << '\n';
 
     return 0;

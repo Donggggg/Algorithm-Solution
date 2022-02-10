@@ -1,13 +1,13 @@
 #include <iostream>
 #include <vector>
 #include <math.h>
-#define P pair<long,long>
+#define P pair<int,int>
 #define MAX_BIN 1024
 using namespace std;
 
 int N;
+int arr[MAX_BIN], ans = 1e10;
 vector<P> flavors;
-long long arr[MAX_BIN], ans = 1e10;
 
 void getMinimumDiff(int idx, int bin, P flavor) {
     if(arr[bin] == 0) {
