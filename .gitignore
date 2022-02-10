@@ -35,6 +35,6 @@
 # Additionals
 .vs
 .vscode
-.DS_STORE
+.DS_Store
 
 *[0-9]
