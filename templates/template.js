@@ -1,3 +1,7 @@
+function solution() {
+    // solve the problem
+}
+
 (function () {
   let input = require('fs').readFileSync('/dev/stdin').toString().split('\n');
   input = input
@@ -5,10 +9,7 @@
     .map((line) => line.replace('\r', ''));
     
     // process the input
-    
     solution();
+    
 })();
 
-function solution() {
-    // solve the problem
-}
