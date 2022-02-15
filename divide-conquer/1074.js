@@ -9,7 +9,7 @@ function getZMapOrder(size, r, c) {
   
   const checkRange = (x, nx, y, ny) => {
     if (x <= R && R < nx && y <= C && C < ny) return true;
-    else current += inc;
+    current += inc;
     return false;
   };
   

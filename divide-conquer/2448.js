@@ -1,8 +1,8 @@
 function gerenateStar(n, x, y, stars) {
   if (3 < n) {
-    gerenateStar(n / 2, x + n / 2, y, stars);
-    gerenateStar(n / 2, x, y + n / 2, stars);
-    gerenateStar(n / 2, x + n / 2 + n / 3 + n / 6, y + n / 2, stars);
+    gerenateStar(n / 2, x + (n / 2), y, stars);
+    gerenateStar(n / 2, x, y + (n / 2), stars);
+    gerenateStar(n / 2, x + n, y + (n / 2), stars);
   } else {
     const starString = ["  *  ", " * * ", "*****"];
 
@@ -13,7 +13,7 @@ function gerenateStar(n, x, y, stars) {
 }
 
 function solution(N) {
-  const total = (5 * N) / 3 + N / 3 - 1;
+  const total = 2 * N - 1;
   const range = [...Array.from(Array(total))];
   let stars = range.map((_) => range.map((_) => false));
 
