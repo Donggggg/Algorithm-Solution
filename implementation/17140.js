@@ -1,12 +1,11 @@
 function print(matrix, state) {
-    matrix.slice(0, state.r).forEach((line) => {
-        const pr = line.reduce((acc, cur, idx) => {
-            if(state.c <= idx) return acc;
-            return `${acc}${cur} `;
-        },"");
-        console.log(pr);
-    });
-    
+  matrix.slice(0, state.r).forEach((line) => {
+    const pr = line.reduce((acc, cur, idx) => {
+      if (state.c <= idx) return acc;
+      return `${acc}${cur} `;
+    }, "");
+    console.log(pr);
+  });
 }
 const MAX = 100;
 const range = [...Array.from(Array(MAX))];
@@ -31,17 +30,20 @@ function translateToColumn(matrix, c, row) {
 }
 
 function translate(matrix) {
-  let newMatrix = [];
-  let array = [];
+  let rowSize = matrix.length;
+
+  for (let i = 0; i < matrix.length; i++)
+    rowSize = Math.max(rowSize, matrix[i].length);
+    
+  const range = [...Array.from(Array(rowSize))];
+  let newMatrix = range.map((_) => range.map((_) => 0));
 
   for (let i = 0; i < matrix.length; i++) {
-    array = [];
-    for (let j = 0; j < matrix.length; j++) {
-      if (i < matrix[j].length) array.push(matrix[j][i]);
-      else array.push(0);
+    for (let j = 0; j < matrix[i].length; j++) {
+      newMatrix[j][i] = matrix[i][j];
     }
-    newMatrix.push(array);
   }
+
   return newMatrix;
 }
 
@@ -80,8 +82,8 @@ function operateR(map, state) {
 }
 
 function operateC(map, state) {
-    let result = [];
-    let maxLen = 0;
+  let result = [];
+  let maxLen = 0;
 
   for (let i = 0; i < state.c; i++) {
     const column = translateToColumn(map, i, state.r);
@@ -91,9 +93,7 @@ function operateC(map, state) {
 
   state.r = maxLen;
 
-  console.log(result, translate(result))
-
-  return {newMatrix: getMap(translate(result)), newState: state};
+  return { newMatrix: getMap(translate(result)), newState: state };
 }
 
 function operateRC(map, state) {
@@ -115,8 +115,6 @@ function solution(r, c, k, arr) {
       return;
     }
     map = operateRC(map, state);
-    print(map, state);
-    console.log(' ')
     time++;
   }
 
