@@ -1,8 +1,8 @@
-let cnt = 0;
 function getWeapon(r, c, type, arr) {
+  const weaponType = [0, -1, 1, 0, -1, 0, 0, -1, -1, 0, 0, 1, 0, 1, 1, 0];
   let newArr = [];
   for (let i = 0; i < arr.length; i++) newArr.push([...arr[i]]);
-  const weaponType = [0, -1, 1, 0, -1, 0, 0, -1, -1, 0, 0, 1, 0, 1, 1, 0];
+
   let power = newArr[r][c] * 2;
   newArr[r][c] = -1;
 
@@ -23,46 +23,38 @@ function getWeapon(r, c, type, arr) {
 
 function getMaximumPower() {
   let maxPower = 0;
-  const range = [...Array.from(Array(5))];
-  let visit = range.map((_)=>range.map((_)=>false));
 
   return {
     execute: function (r, c, power, arr) {
-        cnt++;
-        // if(cnt < 100) 
-        // console.log(r,c, power, arr);
-      for (let i = 0; i < 4; i++) {
-        const { power: cp, newArr } = getWeapon(r, c, i, arr);
-
-        if (!newArr) continue;
-
-        maxPower = Math.max(power + cp, maxPower);
-
-        for (let nr = 0; nr < arr.length; nr++)
-          for (let nc = 0; nc < arr[0].length; nc++)
-            if (newArr[nr][nc] > 0 && !visit[nr][nc]) {
-                // visit[nr][nc] = true;
-                this.execute(nr, nc, power + cp, newArr);
-                // visit[nr][nc] = false;
-            }
+      if (c == arr[0].length) {
+        c = 0;
+        r++;
       }
+
+      if (r == arr.length) {
+        maxPower = Math.max(power, maxPower);
+        return;
+      }
+
+      if (arr[r][c] != -1) {
+        for (let t = 0; t < 4; t++) {
+          const { power: cp, newArr } = getWeapon(r, c, t, arr);
+
+          if (!newArr) continue;
+          else this.execute(r, c + 1, power + cp, newArr);
+        }
+      }
+      this.execute(r, c + 1, power, arr);
     },
     get: function () {
       console.log(maxPower);
     },
-    validate: function(r, c) {
-        return !visit[r][c];
-    }
   };
 }
 
 function solution(N, M, arr) {
   const maxPower = getMaximumPower();
-  for (let r = 0; r < N; r++)
-    for (let c = 0; c < M; c++) {
-        if(maxPower.validate(r,c))
-        maxPower.execute(r, c, 0, arr);
-    }
+  maxPower.execute(0, 0, 0, arr);
   maxPower.get();
 }
 
